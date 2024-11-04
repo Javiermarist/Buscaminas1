@@ -47,9 +47,9 @@ public class MinesweeperGrid : MonoBehaviour
             int row = Random.Range(0, rows);
             int col = Random.Range(0, cols);
 
-            if (!grid[row, col].isMine)
+            if (!grid[row, col].tieneMina)
             {
-                grid[row, col].isMine = true;
+                grid[row, col].tieneMina = true;
             }
             else
             {
@@ -64,10 +64,10 @@ public class MinesweeperGrid : MonoBehaviour
         {
             for (int col = 0; col < cols; col++)
             {
-                if (grid[row, col].isMine) continue;
+                if (grid[row, col].tieneMina) continue;
 
                 int mineCount = CountAdjacentMines(row, col);
-                grid[row, col].mineCount = mineCount;
+                grid[row, col].minasAlrededor = mineCount;
             }
         }
     }
@@ -83,7 +83,7 @@ public class MinesweeperGrid : MonoBehaviour
                 int newRow = row + i;
                 int newCol = col + j;
 
-                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && grid[newRow, newCol].isMine)
+                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && grid[newRow, newCol].tieneMina)
                 {
                     count++;
                 }
@@ -102,7 +102,7 @@ public class MinesweeperGrid : MonoBehaviour
                 // Asegúrate de que no salgas del grid y que no cuentes la celda misma
                 if (r >= 0 && r < grid.GetLength(0) && c >= 0 && c < grid.GetLength(1) && (r != row || c != col))
                 {
-                    grid[r, c].Reveal(); // Llama al método Reveal de la celda adyacente
+                    grid[r, c].Mostrar(); // Llama al método Reveal de la celda adyacente
                 }
             }
         }

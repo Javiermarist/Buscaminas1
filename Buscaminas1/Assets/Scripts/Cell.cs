@@ -1,51 +1,39 @@
 using UnityEngine;
-using TMPro; // Asegúrate de incluir este espacio de nombres
+using TMPro;
 
 public class Cell : MonoBehaviour
 {
-    public bool isMine = false;
-    public int mineCount = 0;
-    public bool isRevealed = false;
-    public bool isFlagged = false;
+    public bool tieneMina = false;
+    public int minasAlrededor = 0;
+    public bool revelado = false;
+    public bool tieneBandera = false;
 
     private SpriteRenderer spriteRenderer;
     private MinesweeperGrid grid;
     private int row, col;
 
-    // Cambia el tipo a TextMeshProUGUI
-    private TextMeshProUGUI bombsText; 
+    public TextMeshProUGUI bombsText; 
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        
-        // Obtener el componente TextMeshPro del objeto Bombs
-        Transform bombsTransform = transform.Find("Canvas/Bombs"); // Cambia la ruta para buscar en el Canvas
-        if (bombsTransform != null)
-        {
-            bombsText = bombsTransform.GetComponent<TextMeshProUGUI>();
-            bombsText.text = ""; // Ocultar texto al inicio
-        }
-        else
-        {
-            Debug.LogError("No se encontró el objeto hijo 'Bombs'. Asegúrate de que existe y tiene un componente TextMeshPro.");
-        }
     }
 
     void OnMouseDown()
     {
-        // Verifica si el clic derecho se detecta
-        if (Input.GetMouseButtonDown(1)) // Clic derecho
+        // Click Derecho
+        if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("Clic derecho detectado en " + gameObject.name);
-            ToggleFlag();
+            Bandera();
             return; // Ignorar clic izquierdo
         }
-
-        if (Input.GetMouseButtonDown(0)) // Clic izquierdo
+        
+        // Clic izquierdo
+        if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Clic izquierdo detectado en " + gameObject.name);
-            Reveal();
+            Mostrar();
         }
     }
 
@@ -57,26 +45,26 @@ public class Cell : MonoBehaviour
         gameObject.name = $"Cell {row},{col}";
     }
 
-    public void Reveal()
+    public void Mostrar()
     {
-        if (isRevealed || isFlagged) return;
+        if (revelado || tieneBandera) return;
 
-        isRevealed = true;
+        revelado = true;
 
-        if (isMine)
+        if (tieneMina)
         {
             spriteRenderer.color = Color.red;
-            Debug.Log("Game Over!");
+            Debug.Log("Has muerto!");
         }
         else
         {
             spriteRenderer.color = Color.gray;
 
-            if (mineCount > 0)
+            if (minasAlrededor > 0)
             {
                 // Mostrar la cantidad de minas en el texto Bombs
-                bombsText.text = mineCount.ToString();
-                bombsText.color = Color.black; // Cambia el color del texto para que sea visible
+                bombsText.text = minasAlrededor.ToString();
+                bombsText.color = Color.black;
             }
             else
             {
@@ -86,22 +74,21 @@ public class Cell : MonoBehaviour
         }
     }
 
-    public void ToggleFlag()
+    public void Bandera()
     {
-        if (isRevealed) return;
+        if (revelado) return;
 
-        isFlagged = !isFlagged;
+        tieneBandera = !tieneBandera; // Alterna el estado de la bandera
 
-        // Cambiar el color para simular una bandera
-        if (isFlagged)
+        if (tieneBandera)
         {
+            spriteRenderer.color = Color.green;
             Debug.Log("Bandera puesta");
-            spriteRenderer.color = Color.green; // Cambia el color a verde
         }
         else
         {
+            spriteRenderer.color = Color.white;
             Debug.Log("Bandera quitada");
-            spriteRenderer.color = Color.white; // Restablecer a blanco si se quita la bandera
         }
     }
 }

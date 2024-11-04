@@ -492,7 +492,7 @@ Transform:
   m_GameObject: {fileID: 804055880}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.062408738, y: -0.4375497, z: 0.02325459}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -583,10 +583,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51da0ecb416285c4ba2b8303f290b80a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMine: 0
-  mineCount: 5
-  isRevealed: 0
-  isFlagged: 0
+  tieneMina: 0
+  minasAlrededor: 0
+  revelado: 0
+  tieneBandera: 0
+  bombsText: {fileID: 428506212}
 --- !u!4 &1755578573 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3677647047027743052, guid: a502b8041d18a8e40800c5894debdccc, type: 3}
