@@ -7,7 +7,7 @@ public class MinesweeperGrid : MonoBehaviour
     public int rows = 10;
     public int cols = 10;
     public GameObject cellPrefab;
-    public Camera mainCamera; // Agrega una referencia a la cámara
+    public Camera mainCamera;
 
     private Cell[,] grid;
 
@@ -16,7 +16,7 @@ public class MinesweeperGrid : MonoBehaviour
         CreateGrid();
         PlaceMines();
         CalculateNumbers();
-        CenterCamera(); // Llama al método para centrar la cámara
+        CenterCamera();
     }
 
     void CreateGrid()
@@ -32,7 +32,7 @@ public class MinesweeperGrid : MonoBehaviour
                 cellObject.transform.parent = transform;
 
                 Cell cell = cellObject.GetComponent<Cell>();
-                cell.SetPosition(row, col, this); // Asigna la referencia del grid a la celda
+                cell.SetPosition(row, col, this);
                 grid[row, col] = cell;
             }
         }
@@ -102,7 +102,7 @@ public class MinesweeperGrid : MonoBehaviour
                 // Asegúrate de que no salgas del grid y que no cuentes la celda misma
                 if (r >= 0 && r < grid.GetLength(0) && c >= 0 && c < grid.GetLength(1) && (r != row || c != col))
                 {
-                    grid[r, c].Mostrar(); // Llama al método Reveal de la celda adyacente
+                    grid[r, c].Reveal();
                 }
             }
         }

@@ -26,14 +26,13 @@ public class Cell : MonoBehaviour
         {
             Debug.Log("Clic derecho detectado en " + gameObject.name);
             Bandera();
-            return; // Ignorar clic izquierdo
         }
         
         // Clic izquierdo
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Clic izquierdo detectado en " + gameObject.name);
-            Mostrar();
+            Reveal();
         }
     }
 
@@ -45,34 +44,32 @@ public class Cell : MonoBehaviour
         gameObject.name = $"Cell {row},{col}";
     }
 
-    public void Mostrar()
-    {
-        if (revelado || tieneBandera) return;
+    // public void Mostrar()
+    // {
+    //     if (revelado || tieneBandera) return;
 
-        revelado = true;
+    //     revelado = true;
 
-        if (tieneMina)
-        {
-            spriteRenderer.color = Color.red;
-            Debug.Log("Has muerto!");
-        }
-        else
-        {
-            spriteRenderer.color = Color.gray;
-
-            if (minasAlrededor > 0)
-            {
-                // Mostrar la cantidad de minas en el texto Bombs
-                bombsText.text = minasAlrededor.ToString();
-                bombsText.color = Color.black;
-            }
-            else
-            {
-                // Si no hay minas alrededor, revela las celdas adyacentes
-                grid.RevealAdjacentCells(row, col);
-            }
-        }
-    }
+    //     if (tieneMina)
+    //     {
+    //         spriteRenderer.color = Color.red;
+    //         Debug.Log("Has muerto!");
+    //     }
+    //     else
+    //     {
+    //         if (minasAlrededor > 0)
+    //         {
+    //             // Mostrar la cantidad de minas en el texto Bombs
+    //             bombsText.text = minasAlrededor.ToString();
+    //             bombsText.color = Color.black;
+    //         }
+    //         else
+    //         {
+    //             // Si no hay minas alrededor, revela las celdas adyacentes
+    //             grid.RevealAdjacentCells(row, col);
+    //         }
+    //     }
+    // }
 
     public void Bandera()
     {
@@ -89,6 +86,34 @@ public class Cell : MonoBehaviour
         {
             spriteRenderer.color = Color.white;
             Debug.Log("Bandera quitada");
+        }
+    }
+
+    public void Reveal()
+    {
+        if (revelado || tieneBandera) return;
+
+        revelado = true;
+
+        if (tieneMina)
+        {
+            spriteRenderer.color = Color.red;
+            Debug.Log("Has muerto!");
+        }
+        else
+        {
+            if (minasAlrededor > 0)
+            {
+                bombsText.text = minasAlrededor.ToString();
+                bombsText.color = Color.black;
+                bombsText.gameObject.SetActive(true);
+            }
+            else
+            {
+                // Si no hay minas alrededor, revela las celdas adyacentes
+                spriteRenderer.color = Color.grey;
+                grid.RevealAdjacentCells(row, col);
+            }
         }
     }
 }
