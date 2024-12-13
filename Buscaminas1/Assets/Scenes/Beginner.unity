@@ -260,7 +260,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.24705882, g: 0.24705882, b: 0.24705882, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -285,7 +285,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 7.9839945
+  orthographic size: 2.7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -345,10 +345,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9efe60e54661d84e813fcf1cc399583, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rows: 10
-  cols: 10
+  rows: 5
+  cols: 5
+  mineCount: 4
   cellPrefab: {fileID: 1755578570}
   mainCamera: {fileID: 519420031}
+  camZ: -10
 --- !u!4 &804055882
 Transform:
   m_ObjectHideFlags: 0
@@ -467,7 +469,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 15.3, y: 17.3}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1386467217
 MonoBehaviour:
@@ -518,8 +520,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 1
-  m_fontSizeBase: 1
+  m_fontSize: 0.48
+  m_fontSizeBase: 0.48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -585,11 +587,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51da0ecb416285c4ba2b8303f290b80a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tieneMina: 0
-  minasAlrededor: 0
-  revelado: 0
-  tieneBandera: 0
-  bombsText: {fileID: 0}
+  bombsText: {fileID: 1386467217}
+  bombsAround: 0
+  hasBomb: 0
+  revealed: 0
+  hasFlag: 0
 --- !u!4 &1755578573 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3677647047027743052, guid: a502b8041d18a8e40800c5894debdccc, type: 3}
@@ -654,15 +656,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2150466625139459503, guid: a502b8041d18a8e40800c5894debdccc, type: 3}
       propertyPath: m_Color.b
-      value: 1
+      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 2150466625139459503, guid: a502b8041d18a8e40800c5894debdccc, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 2150466625139459503, guid: a502b8041d18a8e40800c5894debdccc, type: 3}
       propertyPath: m_Color.r
-      value: 1
+      value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 2150466625139459503, guid: a502b8041d18a8e40800c5894debdccc, type: 3}
       propertyPath: m_DrawMode

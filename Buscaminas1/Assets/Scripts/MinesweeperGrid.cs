@@ -4,17 +4,20 @@ using UnityEngine;
 
 public class MinesweeperGrid : MonoBehaviour
 {
-    public int rows = 10;
-    public int cols = 10;
+    public int rows;
+    public int cols;
+    public int mineCount;
     public GameObject cellPrefab;
     public Camera mainCamera;
+
+    public float camZ;
 
     private Cell[,] grid;
 
     void Start()
     {
         CreateGrid();
-        PlaceMines();
+        PlaceBombs();
         CalculateNumbers();
         CenterCamera();
     }
@@ -38,18 +41,16 @@ public class MinesweeperGrid : MonoBehaviour
         }
     }
 
-    void PlaceMines()
+    void PlaceBombs()
     {
-        int mineCount = (rows * cols) / 5;
-
         for (int i = 0; i < mineCount; i++)
         {
             int row = Random.Range(0, rows);
             int col = Random.Range(0, cols);
 
-            if (!grid[row, col].tieneMina)
+            if (!grid[row, col].hasBomb)
             {
-                grid[row, col].tieneMina = true;
+                grid[row, col].hasBomb = true;
             }
             else
             {
@@ -64,10 +65,10 @@ public class MinesweeperGrid : MonoBehaviour
         {
             for (int col = 0; col < cols; col++)
             {
-                if (grid[row, col].tieneMina) continue;
+                if (grid[row, col].hasBomb) continue;
 
                 int mineCount = CountAdjacentMines(row, col);
-                grid[row, col].minasAlrededor = mineCount;
+                grid[row, col].bombsAround = mineCount;
             }
         }
     }
@@ -83,7 +84,7 @@ public class MinesweeperGrid : MonoBehaviour
                 int newRow = row + i;
                 int newCol = col + j;
 
-                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && grid[newRow, newCol].tieneMina)
+                if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols && grid[newRow, newCol].hasBomb)
                 {
                     count++;
                 }
@@ -111,7 +112,7 @@ public class MinesweeperGrid : MonoBehaviour
     void CenterCamera()
     {
         // Calcula la posición central del mapa
-        Vector3 centerPosition = new Vector3(cols / 2f - 0.5f, rows / 2f - 0.5f, -10); // Ajusta el Z según la distancia de la cámara
+        Vector3 centerPosition = new Vector3(cols / 2f - 0.5f, rows / 2f - 0.5f, camZ); // Ajusta el Z según la distancia de la cámara
         mainCamera.transform.position = centerPosition;
     }
 }

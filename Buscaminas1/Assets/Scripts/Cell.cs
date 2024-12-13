@@ -3,36 +3,45 @@ using TMPro;
 
 public class Cell : MonoBehaviour
 {
-    public bool tieneMina = false;
-    public int minasAlrededor = 0;
-    public bool revelado = false;
-    public bool tieneBandera = false;
-
     private SpriteRenderer spriteRenderer;
     private MinesweeperGrid grid;
-    private int row, col;
+    public TextMeshProUGUI bombsText;
 
-    public TextMeshProUGUI bombsText; 
+    /*public Sprite spriteBomb;
+    public Sprite spriteExplosion;
+    public Sprite spriteFlag;
+    public Sprite pieceSprite;
+    public Sprite[] spriteNumbers;*/
+
+    private int row, col;
+    public int bombsAround = 0;
+
+    public bool hasBomb = false;
+    public bool revealed = false;
+    public bool hasFlag = false;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    void OnMouseDown()
+    void OnMouseOver()
     {
-        // Click Derecho
+        // Click derecho
         if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("Clic derecho detectado en " + gameObject.name);
-            Bandera();
+            Flag();
         }
         
         // Clic izquierdo
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Clic izquierdo detectado en " + gameObject.name);
-            Reveal();
+            if (!hasFlag && !revealed)
+            {
+                Debug.Log("Clic izquierdo detectado en " + gameObject.name);
+                Reveal();
+            }
         }
     }
 
@@ -44,74 +53,53 @@ public class Cell : MonoBehaviour
         gameObject.name = $"Cell {row},{col}";
     }
 
-    // public void Mostrar()
-    // {
-    //     if (revelado || tieneBandera) return;
-
-    //     revelado = true;
-
-    //     if (tieneMina)
-    //     {
-    //         spriteRenderer.color = Color.red;
-    //         Debug.Log("Has muerto!");
-    //     }
-    //     else
-    //     {
-    //         if (minasAlrededor > 0)
-    //         {
-    //             // Mostrar la cantidad de minas en el texto Bombs
-    //             bombsText.text = minasAlrededor.ToString();
-    //             bombsText.color = Color.black;
-    //         }
-    //         else
-    //         {
-    //             // Si no hay minas alrededor, revela las celdas adyacentes
-    //             grid.RevealAdjacentCells(row, col);
-    //         }
-    //     }
-    // }
-
-    public void Bandera()
+    public void Flag()
     {
-        if (revelado) return;
+        if (revealed) return;
 
-        tieneBandera = !tieneBandera; // Alterna el estado de la bandera
-
-        if (tieneBandera)
+        if (!revealed)
         {
+            hasFlag = !hasFlag;
+        }
+
+        if (hasFlag)
+        {
+            //GetComponent<SpriteRenderer>().sprite = flagSprite;
             spriteRenderer.color = Color.green;
             Debug.Log("Bandera puesta");
         }
         else
         {
-            spriteRenderer.color = Color.white;
+            //GetComponent<SpriteRenderer>().sprite = normalPieceSprite;
+            spriteRenderer.color = Color.grey;
             Debug.Log("Bandera quitada");
         }
     }
 
     public void Reveal()
     {
-        if (revelado || tieneBandera) return;
+        if (revealed || hasFlag) return;
 
-        revelado = true;
+        revealed = true;
 
-        if (tieneMina)
+        if (hasBomb)
         {
             spriteRenderer.color = Color.red;
             Debug.Log("Has muerto!");
         }
         else
         {
-            if (minasAlrededor > 0)
+            if (bombsAround > 0)
             {
-                bombsText.text = minasAlrededor.ToString();
+                bombsText.text = bombsAround.ToString();
                 bombsText.color = Color.black;
                 bombsText.gameObject.SetActive(true);
+                spriteRenderer.color = Color.white;
             }
             else
             {
                 // Si no hay minas alrededor, revela las celdas adyacentes
-                spriteRenderer.color = Color.grey;
+                spriteRenderer.color = Color.white;
                 grid.RevealAdjacentCells(row, col);
             }
         }
